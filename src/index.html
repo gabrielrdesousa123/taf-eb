@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAF-EB — Sistema de Avaliação Física</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<!-- ── Barra superior ───────────────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-left">
+    <div class="logo-shield">⬡</div>
+    <div class="topbar-title">
+      <span class="title-main">TAF-EB</span>
+      <span class="title-sub">Sistema de Avaliação Física · EB20-D-03.053</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-header" onclick="backupDb()" title="Fazer backup do banco de dados">
+      💾 Backup
+    </button>
+    <div class="db-path" id="dbPath">carregando...</div>
+  </div>
+</header>
+
+<!-- ── Layout principal ─────────────────────────────────────────────────── -->
+<div class="layout">
+
+  <!-- Navegação lateral -->
+  <nav class="sidebar">
+    <div class="nav-section-label">MENU</div>
+    <button class="nav-btn active" data-page="dashboard" onclick="navegarPara('dashboard', this)">
+      <span class="nav-icon">◈</span> Dashboard
+    </button>
+    <div class="nav-section-label">AVALIAÇÕES</div>
+    <button class="nav-btn" data-page="avaliacoes" onclick="navegarPara('avaliacoes', this)">
+      <span class="nav-icon">◉</span> Gerenciar TAFs
+    </button>
+    <button class="nav-btn" data-page="lancar" onclick="navegarPara('lancar', this)">
+      <span class="nav-icon">◎</span> Lançar Resultados
+    </button>
+    <div class="nav-section-label">CADASTROS</div>
+    <button class="nav-btn" data-page="militares" onclick="navegarPara('militares', this)">
+      <span class="nav-icon">◈</span> Militares
+    </button>
+    <button class="nav-btn" data-page="importar" onclick="navegarPara('importar', this)">
+      <span class="nav-icon">⇪</span> Importar CSV
+    </button>
+    <div class="nav-section-label">RELATÓRIOS</div>
+    <button class="nav-btn" data-page="ficha" onclick="navegarPara('ficha', this)">
+      <span class="nav-icon">◑</span> Ficha Individual
+    </button>
+  </nav>
+
+  <!-- Área de conteúdo -->
+  <main class="content" id="contentArea">
+    <!-- Páginas injetadas por JS -->
+  </main>
+</div>
+
+<!-- ── Modal universal ──────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-header">
+      <h3 id="modalTitulo">Título</h3>
+      <button class="modal-fechar" onclick="fecharModalForce()">✕</button>
+    </div>
+    <div class="modal-corpo" id="modalCorpo"></div>
+    <div class="modal-rodape" id="modalRodape"></div>
+  </div>
+</div>
+
+<!-- ── Toast ────────────────────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<script src="assets/js/jszip.min.js"></script>
+<script src="taf-calculos.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

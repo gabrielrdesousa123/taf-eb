@@ -1,0 +1,50 @@
+{
+  "name": "taf-eb",
+  "version": "1.0.0",
+  "description": "Sistema de Avaliacao Fisica - Exercito Brasileiro",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "br.eb.taf",
+    "productName": "TAF-EB",
+    "copyright": "Copyright 2026 Gabriel Sousa",
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "src/assets/icons/icon.ico"
+    },
+    "portable": {
+      "artifactName": "TAF-EB-Portatil.exe"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "node_modules/sql.js/**/*",
+      "!node_modules/sql.js/dist/sql-wasm.wasm",
+      "node_modules/sql.js/dist/sql-wasm.wasm",
+      "!**/node_modules/electron-builder/**",
+      "!**/node_modules/.cache/**",
+      "!**/*.map"
+    ],
+    "extraResources": [],
+    "directories": {
+      "output": "dist"
+    },
+    "asar": true
+  },
+  "dependencies": {
+    "sql.js": "^1.12.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  }
+}

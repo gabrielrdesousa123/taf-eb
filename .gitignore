@@ -1,0 +1,29 @@
+# Banco de dados — NUNCA subir dados reais
+dados/*.db
+dados/*.db-journal
+dados/*.db-wal
+dados/*.db-shm
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build Electron
+dist/
+out/
+build/
+
+# Variáveis de ambiente
+.env
+.env.local
+
+# VS Code
+.vscode/settings.json
+
+# Logs
+*.log

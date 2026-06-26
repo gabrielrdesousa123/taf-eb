@@ -1863,11 +1863,12 @@ async function exportarWord(avalId) {
   const cOII={}; OIIs.forEach(o=>{cOII[o.campo]=OM.map(m=>lista.filter(r=>r[o.campo]===m).length);});
 
   const charts=[
-    {id:1,xml:_mkChartBarras(1,'Qtd / Suficiência',['S','NS','NR'],[sufS,sufNS,sufNR],CS)},
-    {id:2,xml:_mkChartPizza (2,'Pct / Suficiência',['S','NS','NR'],[sufS,sufNS,sufNR],CS)},
+    {id:1,xml:_mkChartBarras(1,'Qtd / Suficiência',['S','NS'],[sufS,sufNS],CS)},
+    {id:2,xml:_mkChartPizza (2,'Pct / Suficiência',['S','NS'],[sufS,sufNS],CS)},
     {id:3,xml:_mkChartBarras(3,'Qtd / Menção Global',OM,OM.map(m=>cMen[m]),CM)},
     {id:4,xml:_mkChartPizza (4,'Pct / Menção Global',OM,OM.map(m=>cMen[m]),CM)},
     ...OIIs.map((o,i)=>({id:5+i,xml:_mkChartBarras(5+i,o.label,OM,cOII[o.campo],CM)})),
+    ...OIIs.map((o,i)=>({id:9+i,xml:_mkChartPizza(9+i,o.label,OM,cOII[o.campo],CM)})),
   ];
 
   // Linhas da tabela
@@ -1876,7 +1877,7 @@ async function exportarWord(avalId) {
   const body=
     _oP(_oRun('RELATÓRIO DE AVALIAÇÃO FÍSICA — TAF-EB',true,'2D4A1E',36),'left',0,50)+
     _oP(_oRun(`${aval.descricao} · ${labelTipo(aval.tipo)} · ${aval.ano} · ${new Date().toLocaleDateString('pt-BR')}`,false,'888888',18),'left',0,40)+
-    _oP(_oRun(`Total: ${total}   Suficientes: ${sufS} (${total?(sufS/total*100).toFixed(1):0}%)   NS: ${sufNS}   NR: ${sufNR}`,true,'',18),'left',0,80)+
+    _oP(_oRun(`Total: ${total}   Suficientes: ${sufS} (${total?(sufS/total*100).toFixed(1):0}%)   NS: ${sufNS}`,true,'',18),'left',0,80)+
     _oP(_oRun('SUFICIÊNCIA',true,'2D4A1E',22),'left',0,40)+
     _oTbl2(
       _oP(_oRun('Qtd',false,'888888',14),'center',0,10)+_oChartP('rChart1',3200000,2000000,1),
@@ -1888,6 +1889,7 @@ async function exportarWord(avalId) {
     )+
     _oP(_oRun('OII',true,'2D4A1E',22),'left',120,40)+
     _oTbl4(OIIs.map((o,i)=>_oP(_oRun(o.label,false,'888888',14),'center',0,10)+_oChartP(`rChart${5+i}`,2200000,1600000,5+i)))+
+    _oTbl4(OIIs.map((o,i)=>_oP(_oRun(o.label+' (%)',false,'888888',14),'center',0,10)+_oChartP(`rChart${9+i}`,2200000,1600000,9+i)))+
     _oPB()+
     _oP(_oRun(`LISTA — ${aval.descricao}`,true,'2D4A1E',28),'left',0,60)+
     `<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="CCCCCC"/><w:bottom w:val="single" w:sz="4" w:color="CCCCCC"/><w:left w:val="single" w:sz="4" w:color="CCCCCC"/><w:right w:val="single" w:sz="4" w:color="CCCCCC"/><w:insideH w:val="single" w:sz="4" w:color="EDE7D8"/><w:insideV w:val="single" w:sz="4" w:color="EDE7D8"/></w:tblBorders></w:tblPr><w:tr>${_oTh('#',380)}${_oTh('Nome de Guerra',1800)}${_oTh('Posto',860)}${_oTh('Sx',340)}${_oTh('Corrida',650)}${_oTh('M',580)}${_oTh('Flexão',650)}${_oTh('M',580)}${_oTh('Abdom',650)}${_oTh('M',580)}${_oTh('Barra',650)}${_oTh('M',580)}${_oTh('Global',580)}${_oTh('Suf.',580)}${_oTh('Ch.',460)}</w:tr>${linhas}</w:tbl>`;

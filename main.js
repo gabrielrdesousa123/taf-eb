@@ -226,7 +226,7 @@ app.on('window-all-closed', () => {
 
 // ── MILITARES ─────────────────────────────────────────────────────────────
 ipcMain.handle('militares:listar', () => {
-  const stmt = db.prepare(`SELECT * FROM militares ORDER BY COALESCE(nome_guerra, nome)`);
+  const stmt = db.prepare(`SELECT * FROM militares WHERE ativo = 1 ORDER BY COALESCE(nome_guerra, nome)`);
   const rows = [];
   while (stmt.step()) rows.push(stmt.getAsObject());
   stmt.free();
@@ -329,7 +329,7 @@ ipcMain.handle('resultados:listar', (_, avaliacao_id) => {
     FROM resultados_taf r
     JOIN militares m ON r.militar_id = m.id
     JOIN avaliacoes a ON r.avaliacao_id = a.id
-    WHERE r.avaliacao_id = ? AND a.ativa = 1
+    WHERE r.avaliacao_id = ? AND a.ativa = 1 AND m.ativo = 1
     ORDER BY COALESCE(m.nome_guerra, m.nome)
   `);
   stmt.bind([avaliacao_id]);
@@ -352,6 +352,7 @@ ipcMain.handle('resultados:listarComMilitares', (_, avaliacao_id, chamada) => {
     FROM militares m
     LEFT JOIN resultados_taf r
       ON r.militar_id = m.id AND r.avaliacao_id = ? AND r.chamada = ?
+    WHERE m.ativo = 1
     ORDER BY COALESCE(m.nome_guerra, m.nome)
   `);
   stmt.bind([avaliacao_id, chamada]);
